@@ -1,0 +1,13 @@
+{
+  "name": "Node container for Lawrence Reynolds Technotes ",
+  "image": "node:latest",
+
+  // This ensures your files in WSL are mapped into the container
+  // You don't need manual mounts; VS Code handles the workspace automatically.
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+
+  "postStartCommand": "npm run dev"
+
+  // "forwardPorts": [3000, 3000],
+}
