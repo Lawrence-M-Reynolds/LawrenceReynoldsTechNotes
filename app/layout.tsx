@@ -18,7 +18,7 @@ const navbar = (
 )
 const footer = <Footer>MIT {new Date().getFullYear()} © Nextra.</Footer>
  
-export default async function RootLayout({ children }) {
+export default async function RootLayout({ children }: any) {
   return (
     <html
       // Not required, but good for SEO
