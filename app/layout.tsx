@@ -12,7 +12,7 @@ export const metadata = {
 const banner = null;// <Banner storageKey="some-key">Nextra 4.0 is released 🎉</Banner>
 const navbar = (
   <Navbar
-    logo={<b>Lawrence Reynold's Technical Notes</b>}
+    logo={<b>Lawrence Reynolds's Technical Notes</b>}
     // ... Your additional navbar options
   />
 )
