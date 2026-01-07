@@ -38,12 +38,12 @@ export default async function RootLayout({ children }: any) {
           banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
+          docsRepositoryBase="https://github.com/Lawrence-M-Reynolds/LawrenceReynoldsTechNotes/tree/main"
           feedback={{
-              content: null,
-              labels: "",
-              link: ""
+            content: "Provide feedback here..",
+            link: "https://github.com/Lawrence-M-Reynolds/LawrenceReynoldsTechNotes/issues/new?title=Feedback%20for%20%E2%80%9CTechnical%20Notes%20Website%E2%80%9D&labels=feedback"
           }}
+          search={null}
           editLink={null}
           footer={footer}
           // ... Your additional layout options
