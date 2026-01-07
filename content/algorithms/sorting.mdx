@@ -1,0 +1,90 @@
+## Bubble Sort
+
+````java
+class BubbleSort {
+    public void bubbleSortAsc(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int next = 1; next < array.length - i; next++) {
+                int currentVal = array[next - 1];
+                int nextVal = array[next];
+
+                if (currentVal > nextVal) {
+                    array[next - 1] = nextVal;
+                    array[next] = currentVal;
+                }
+            }
+        }
+    }
+}
+````
+
+## Merge Sort
+````java
+class MergeSort {
+    
+    private void mergeSort_merge(int[] array, int[] tempArray, int left, int mid, int right) {
+        // Copy the sub-array from array defined by left and right into the same indexes of tempArray.
+        for (int i = left; i <= right; i++) {
+            tempArray[i] = array[i];
+        }
+        
+        // Separate the array at the index "mid" into two sub-arrays.
+        // NOTE: mid is the last index of the first array (and mid + 1 is the first of the second).
+        // Iterate through the elements of two halves and add the elements in order over the original
+        // values in array. Stop when either of the two halves are empty.
+        int leftPointer = left;
+        int rightPointer = mid + 1;
+        int addedPointer = left;
+        while (leftPointer <= mid && rightPointer <= right) {
+            if (tempArray[leftPointer] <= tempArray[rightPointer]) {
+                array[addedPointer] = tempArray[leftPointer];
+                leftPointer++;
+            } else {
+                array[addedPointer] = tempArray[rightPointer];
+                rightPointer++;
+            }
+            addedPointer++;
+        }
+        
+        // Just add all of the remaining elements of the array that wasn't emptied.
+        // This could be either the first or second half so we have to do both.
+        int remainingPointer = leftPointer <= mid ? leftPointer : rightPointer;
+        for(; addedPointer <= right; addedPointer++, remainingPointer++) {
+            array[addedPointer] = tempArray[remainingPointer];
+        }
+    }
+    
+    private void mergeSortAsc(int[] array, int[] tempArray, int left, int right) {
+        if (left >= right) {
+            // This occurs for the cases(*) shown below.
+            return;
+        }
+
+        // Find the mid part of this array.
+        // Integer devision rounds down, so:
+        // if (left + right) is odd (array size is even)
+        //  then mid points to the lower of the middle index.
+        // If (left + right) is even (array size is odd)
+        //  then mid points to the middle index.
+        int mid = (left + right) / 2;
+        
+        // Recursive calls on both the left and right sub-arrays (assuming that mid is the
+        // end of the first array, and (mid + 1) is that of the second).
+        // * left == mid if the input array length was 2 (left = mid = 0).
+        mergeSortAsc(array, tempArray, left, mid);
+        // * (mid + 1) == right if the input array length was 2 (mid = 0 -> mid + 1 = right = 1).
+        // * (mid + 1) == right if the input array is of length 3 (mid = 1 -> mid + 1 = right = 2).
+        mergeSortAsc(array, tempArray, (mid + 1), right);
+
+        // Given the above cases(*), mergeSort_merge is only called with arrays of size >= 2
+        // Note: mergeSort_merge must take mid as the start and end pointers of the first array
+        // as all recursive calls were made with this being the case and so have been
+        // sorted accordingly.
+        mergeSort_merge(array, tempArray, left, mid, right);
+    }
+    
+    public void sortArray(int[] unsortedArray) {     
+        mergeSortAsc(unsortedArray, new int[unsortedArray.length], 0, (unsortedArray.length - 1));
+    }
+}
+````
