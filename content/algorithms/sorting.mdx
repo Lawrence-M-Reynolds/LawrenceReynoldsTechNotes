@@ -89,3 +89,86 @@ class MergeSort {
     }
 }
 ````
+
+## Heap Sort
+Heap sort works by building a binary tree relationship between each of the values within the array. See how the elements in the array related to each other in an array:
+![My Diagram](./assets/heapSort.png)
+
+When building in ascending order, the heap will be structured such that each parent will be larger than both of its children. Once this is done, the largest value will always be at the front. We swap this value with the value at end. The end value is now considered "retired" as it is in the correct place and can be left. 
+
+The heap structure algorithm is now run with the same array but without considering the retired element (so effectively it has its length decreased by 1). But the only value that is out of place at this point is the element in the first location so the algorithm only has to fix that along with any descendent nodes in the process.
+
+This process is repeated, until all but one element has been retired. At this point the array is sorted in ascending order.
+
+To sort in descending order the relationship between the parent nodes is reversed. So the parent in each case must be less than each of its children. In that case the first element of the array will always be sorted before it is swapped with the last index value of the array.
+
+````java
+class Solution {
+    private void restructureHeap(int[] array, int p, int length) {
+        // p is the index that references the parent node of 1-2 child nodes.
+        // This *should* reference be the greatest value of all three.
+        // We need to determine if this is the case and swap it the parent value
+        // with the largest child value if necessary.
+        // Because the child node may have been the parent of 1-2 other nodes itself
+        // we then need to call this method recursively on that node as well.
+        
+        // Note that the children of any node is given by (2 * p) + 1
+        // and (2 * p) + 2.
+        
+        int pVal = array[p];
+        int c1 = (2 * p) + 1;
+        int c2 = (2 * p) + 2;
+        int swap = p;
+        
+        if (c1 < length && array[c1] > array[swap]) {
+               swap = c1;
+        }
+        
+        if (c2 < length && array[c2] > array[swap]) {
+               swap = c2;
+        }
+        
+        if (p != swap) {
+            array[p] = array[swap];
+            array[swap] = pVal;
+            
+            restructureHeap(array, swap, length);
+        }
+    }
+    
+    private void heapSortAsc(int[] array) {
+        // Restructure heap at the from the mid-point down.
+        for (int p = (array.length / 2) - 1; p >= 0; p--) {
+            restructureHeap(array, p, array.length);
+        }
+        
+        // For each element, excluding those that have been "retired" to the end
+        // of the array.
+        // - Swap the end with the last value
+        // - restructure from just the first index as that is out of order.
+        for (int length = array.length; length > 0; length--) {
+            int swap = array[0];
+            array[0] = array[length - 1];
+            array[length - 1] = swap;
+            
+            int newlength = length - 1;
+            restructureHeap(array, 0, newlength);
+        }
+        
+    }
+    
+    public int heightChecker(int[] heights) {     
+        int count = 0;
+        int[] heightsSorted = Arrays.copyOf(heights, heights.length);
+        heapSortAsc(heightsSorted);
+        
+        for (int i = 0; i < heights.length; i++) {
+            if (heights[i] != heightsSorted[i]) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
+````
