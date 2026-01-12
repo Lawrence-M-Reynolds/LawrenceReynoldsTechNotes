@@ -2,6 +2,8 @@
   "name": "Node container for Lawrence Reynolds Technotes ",
   "image": "node:latest",
 
+  "runArgs": ["--name", "LReynoldsTechnotes"],
+
   // This ensures your files in WSL are mapped into the container
   // You don't need manual mounts; VS Code handles the workspace automatically.
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
