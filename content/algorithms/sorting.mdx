@@ -1,10 +1,15 @@
 # Sorting Algorithms
 ## Bubble Sort
 
+When sorting with bubble sort in ascending order, the array is iterated over and each value is compared to the next one. If the is larger than the next one then the values are swapped. So a high value near the beggining will propagate towards the end until a larger value is found, or it reaches the end of the array. This process has to be repeated multiple times so that after several iterations all of the values will have propagated so that the whole array is in ascending order.
+
+For descending order, the values are swapped if the current value is less than the next value.
+
 ````java
 class BubbleSort {
     public void bubbleSortAsc(int[] array) {
         for (int i = 0; i < array.length - 1; i++) {
+            boolean modified = false;
             for (int next = 1; next < array.length - i; next++) {
                 int currentVal = array[next - 1];
                 int nextVal = array[next];
@@ -12,12 +17,35 @@ class BubbleSort {
                 if (currentVal > nextVal) {
                     array[next - 1] = nextVal;
                     array[next] = currentVal;
+                    modified = true;
                 }
+            }
+            if (!modified) {
+                break;
             }
         }
     }
 }
 ````
+
+### Time Complexity / Space Complexity
+This can take from one iteration up to as many as their are elements in the array. Therefore the time complexity may range from:
+
+$$
+O(n)
+$$
+
+to:
+
+$$
+O(n^2)
+$$
+
+Because the array is modified in place the space complexity is constant, regardless of the input array size. So the complexity is:
+
+$$
+O(1)
+$$
 
 ## Merge Sort
 ````java
