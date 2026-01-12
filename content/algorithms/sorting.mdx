@@ -131,7 +131,7 @@ This process is repeated, until all but one element has been retired. At this po
 To sort in descending order the relationship between the parent nodes is reversed. So the parent in each case must be less than each of its children. In that case the first element of the array will always be sorted before it is swapped with the last index value of the array.
 
 ````java
-class Solution {
+class HeapSort {
     private void restructureHeap(int[] array, int p, int length) {
         // p is the index that references the parent node of 1-2 child nodes.
         // This *should* reference be the greatest value of all three.
@@ -183,20 +183,6 @@ class Solution {
             restructureHeap(array, 0, newlength);
         }
         
-    }
-    
-    public int heightChecker(int[] heights) {     
-        int count = 0;
-        int[] heightsSorted = Arrays.copyOf(heights, heights.length);
-        heapSortAsc(heightsSorted);
-        
-        for (int i = 0; i < heights.length; i++) {
-            if (heights[i] != heightsSorted[i]) {
-                count++;
-            }
-        }
-        
-        return count;
     }
 }
 ````
