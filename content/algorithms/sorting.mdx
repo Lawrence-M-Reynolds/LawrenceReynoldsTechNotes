@@ -186,3 +186,62 @@ class HeapSort {
     }
 }
 ````
+
+## Counting Sort
+Counting sort is different from the other arrays as it relies on counting the occurrence of each value in the array. Each value is mapped to the number of occurences while at the same time the minimum and maximum values are determined.
+
+The next step is to iterate over the entire range of values - from the minimum value to the maximum for ascending order, or the reverse for descending order. Check if any values are in the map and add that many to the array.
+
+
+````java
+class CountingSort {
+    /**
+    Create a hashmap.
+    Iterate over array:
+        Find the min/max values.
+        Populate the map with the count of each value.
+    Iterate over the range of min - max, in the direction of ordering, or until the array pointer expires.
+        Check if the value is in the map
+        if it is, populate the original array with as many values as is in the hashmap.
+        move the array pointer each time.
+    
+    */
+    
+    private void countSort(int[] arr) {
+        var countMap = new HashMap<Integer, Integer>();
+        var min = Integer.MAX_VALUE;
+        var max = Integer.MIN_VALUE;
+        for (int i : arr) {
+            min = min > i ? i : min;
+            max = max < i ? i : max;
+            countMap.put(i, countMap.getOrDefault(i, 0) + 1);
+        }
+        
+        var i = 0;
+        for(int val = min; val <= max && i < arr.length; val++) {
+            var occurs = countMap.getOrDefault(val, 0);
+            for(int j = 1; j <= occurs; j++, i++) {
+                arr[i] = val;
+            }
+        }
+    }
+}
+````
+
+### Analysis
+
+
+Because
+
+### Time Complexity / Space Complexity
+This algorithm is only effective when you know that the range of values is low in comparison to the length of the array. You have to iterate at least twice So the complexity is:
+
+$$
+O(n+k)
+$$
+
+Because the array is modified in place but an extra data structure is populated to hold the count values. So the complexity is:
+
+$$
+O(1+k)
+$$
